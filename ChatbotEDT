@@ -87,7 +87,7 @@ var esBot = {
         name: "EDT Chat Bot",
         creator: "Skrillex_Da_Mari",
         loggedInID: null,
-        scriptLink: "https://sites.google.com/site/chatbotedt/EDTchatbot.js",
+        scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/ChatbotEDT",
         cmdLink: "http://goo.gl/CjCgvg",
         roomSettings: {
             maximumAfk: 220,
