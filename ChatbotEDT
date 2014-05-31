@@ -46,7 +46,7 @@ var retrieveFromStorage = function(){
         var room = JSON.parse(localStorage.getItem("esBotRoom"));
         var elapsed = Date.now() - JSON.parse(info).time;
         if((elapsed < 1*60*60*1000)){
-            API.chatLog('Retrieving previously stored data.');
+            API.chatLog('o Historico anterior foi restaurado com sucesso.');
             esBot.roomSettings = settings;
             esBot.room.users = room.users;
             esBot.room.afkList = room.afkList;
@@ -82,7 +82,7 @@ var retrieveFromStorage = function(){
 };
 
 var esBot = {
-        version: "2.0.1",        
+        version: "3.0.0",        
         status: true,
         name: "EDT Chat Bot",
         creator: "Skrillex_Da_Mari",
@@ -316,7 +316,7 @@ var esBot = {
                 if(user.lastDC.time === null) return ('/me @' + name + ' Nao desconectou enquanto eu estava online.');
                 var dc = user.lastDC.time;
                 var pos  = user.lastDC.position;
-                if(pos === null) return ("/me A lista de espera precisa ser atualizada para mim voltar pegar as posicoes perdidas.");
+                if(pos === null) return ("/me A lista de espera precisa ser atualizada para eu voltar a pegar as posicoes perdidas.");
                 var timeDc = Date.now() - dc;
                 var validDC = false;
                 if(esBot.roomSettings.maximumDc * 60 * 1000 > timeDc){
@@ -336,7 +336,7 @@ var esBot = {
                 }
                 var newPosition = user.lastDC.position - songsPassed - afksRemoved;
                 if(newPosition <= 0) newPosition = 1;
-                var msg = '/me @' + esBot.userUtilities.getUser(user).username + ' diconectou ' + time + ' E agora deve ser movido a posicao ' + newPosition + '.';
+                var msg = '/me @' + esBot.userUtilities.getUser(user).username + ' diconectou ' + time + ' E agora deve ser movido para posicao ' + newPosition + '.';
                 esBot.userUtilities.moveUser(user.id, newPosition, true);
                 return msg;             
             },              
@@ -610,12 +610,12 @@ var esBot = {
             var newMedia = obj.media;
             if(esBot.roomSettings.timeGuard && newMedia.duration > esBot.roomSettings.maximumSongLength*60  && !esBot.room.roomevent){
                 var name = obj.dj.username;
-                API.sendChat('/me @' + name + ', Sua musica e muito longa ' + esBot.roomSettings.maximumSongLength + ' minutes, Voce precisa de permicao para tocar musicas longas.');
+                API.sendChat('/me @' + name + ', Sua musica e muito longa ' + esBot.roomSettings.maximumSongLength + ' minutes, Voce precisa de permição para tocar musicas longas.');
                 API.moderateForceSkip();
             }
             var user = esBot.userUtilities.lookupUser(obj.dj.id);
             if(user.ownSong){
-                API.sendChat('/me :up: @' + user.username + ' has permission to play their own production!');
+                API.sendChat('/me :up: @' + user.username + ' você tem permição para tocar sua produção!');
                 user.ownSong = false;
             }
             user.lastDC.position = null;
@@ -681,18 +681,18 @@ var esBot = {
             }
             msg = msg.toLowerCase();
             if(msg === 'skip'){
-                    API.sendChat("/me @" + chat.from + ", don't ask for skips - nao peça para skipar");
+                    API.sendChat("/me @" + chat.from + ", don't ask for skips - nao peça para Pular");
                     return true;
                     }
             for (var j = 0; j < esBot.chatUtilities.spam.length; j++){
                 if(msg === esBot.chatUtilities.spam[j]){
-                    API.sendChat("/me @" + chat.from + ", please don't spam - por favor nao floode");
+                    API.sendChat("/me @" + chat.from + ", please don't spam - por favor não faça spam");
                     return true;
                     }
                 }
             for (var i = 0; i < esBot.chatUtilities.beggarSentences.length; i++){
                 if(msg.indexOf(esBot.chatUtilities.beggarSentences[i]) >= 0){
-                    API.sendChat("/me @" + chat.from + ", please don't ask for fans - por favor nao pergunte por fans");
+                    API.sendChat("/me @" + chat.from + ", please don't ask for fans - por favor não pergunte por fans");
                     return true;
                 }
             } 
@@ -726,14 +726,14 @@ var esBot = {
                     if (plugRoomLinkPatt.exec(msg)) {
                       sender = API.getUser(chat.fromID);
                       if (perm === 0) {                                                              
-                              API.sendChat("/me @" + chat.from + ", don't post links to other rooms please - nao poste links de outras salas por favor");
+                              API.sendChat("/me @" + chat.from + ", don't post links to other rooms please - não poste links de outras salas por favor");
                               API.moderateDeleteChat(chat.chatID);
                               return true;
                       }
                     }
                 if(msg.indexOf('http://adf.ly/') > -1){
                     API.moderateDeleteChat(chat.chatID);
-                    API.sendChat('/me @' + chat.from + ', Por favor escolha sue programa de autowoot. Eu sugiro o PlugCubed: http://plugcubed.net/');
+                    API.sendChat('/me @' + chat.from + ', Por favor escolha seu programa de autowoot. Eu sugiro o PlugCubed: http://plugcubed.net/');
                     return true;
                 }                    
                 if(msg.indexOf('autojoin was not enabled') > 0 || msg.indexOf('Mensagen de AFK nao esta ativada') > 0 || msg.indexOf('afkdisable') > 0 || msg.indexOf('joindisable') > 0 || msg.indexOf('autojoin desativado') > 0 || msg.indexOf('Mensagen de AFK desativada') > 0){ 
@@ -967,7 +967,7 @@ var esBot = {
         },
         startup: function(){
             var u = API.getUser();
-            if(u.permission < 2) return API.chatLog("Only managers and up can run a bot.");
+            if(u.permission < 2) return API.chatLog("Somente managers ou cargos maiores podem ligar este Chatbot");
             this.connectAPI();
             retrieveFromStorage();
             if(esBot.room.roomstats.launchTime === null){
@@ -1002,7 +1002,7 @@ var esBot = {
             esBot.status = true;
             API.sendChat('/cap 1');
             API.setVolume(0);
-            API.sendChat('/me ' + esBot.name + ' v' + esBot.version + ' Ligado, Editado e Traduzido por TioSkrillex & Khrons');
+            API.sendChat('/me ' + esBot.name + ' v' + esBot.version + ' Ligado, Editado e Traduzido por TioSkrillex - Marilia Pastori');
         },                        
         commands: {        
             executable: function(minRank, chat){
@@ -1061,7 +1061,7 @@ var esBot = {
                                     if(msg.length === cmd.length) time = 60;
                                     else{
                                         time = msg.substring(cmd.length + 1);
-                                        if(isNaN(time)) return API.sendChat('/me [@' + chat.from + '] Invalid time specified.');
+                                        if(isNaN(time)) return API.sendChat('/me [@' + chat.from + '] O tempo especificado e invalido.');
                                     }
                                     for(var i = 0; i < esBot.room.users.length; i++){
                                         userTime = esBot.userUtilities.getLastActivity(esBot.room.users[i]);
@@ -1082,7 +1082,7 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Usuario nao identificado.');
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Usuario não identificado.');
                                     var name = msg.substr(cmd.length + 2);   
                                     var user = esBot.userUtilities.lookupUserName(name);
                                     if (msg.length > cmd.length + 2) {
@@ -1105,11 +1105,11 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Limite nao identificado');
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Limite não identificado');
                                     var limit = msg.substring(cmd.length + 1);
                                     if(!isNaN(limit)){
                                         esBot.roomSettings.maximumAfk = parseInt(limit, 10);
-                                        API.sendChat('/me [@' + chat.from + '] O tempo maximo afk permitido foi setado para ' + esBot.roomSettings.maximumAfk + ' minutes.');
+                                        API.sendChat('/me [@' + chat.from + '] O tempo maximo afk permitido foi mudado para ' + esBot.roomSettings.maximumAfk + ' minutes.');
                                     }
                                     else API.sendChat('/me [@' + chat.from + '] Limite invalido.');
                                 };                              
@@ -1126,12 +1126,12 @@ var esBot = {
                                     if(esBot.roomSettings.afkRemoval){
                                         esBot.roomSettings.afkRemoval = !esBot.roomSettings.afkRemoval;
                                         clearInterval(esBot.room.afkInterval);
-                                        API.sendChat('/me [@' + chat.from + '] Turned afk removal off.');
+                                        API.sendChat('/me [@' + chat.from + '] A remoção de ausencia esta Desligada.');
                                       }
                                     else {
                                         esBot.roomSettings.afkRemoval = !esBot.roomSettings.afkRemoval;
                                         esBot.room.afkInterval = setInterval(function(){esBot.roomUtilities.afkCheck()}, 2 * 1000);
-                                        API.sendChat('/me [@' + chat.from + '] Turned afk removal on.');
+                                        API.sendChat('/me [@' + chat.from + '] A remoção de ausencia esta ligada.');
                                       }
                                 };                              
                         },
@@ -1145,10 +1145,10 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Usuario nao identificado.')
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Usuario não identificado.')
                                     var name = msg.substring(cmd.length + 2);
                                     var user = esBot.userUtilities.lookupUserName(name);
-                                    if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] O usuario nao e valido.');
+                                    if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] O usuario não e valido.');
                                     esBot.userUtilities.setLastActivity(user);
                                     API.sendChat('/me [@' + chat.from + '] Reset the afk status of @' + name + '.');
                                 };                              
@@ -1214,7 +1214,7 @@ var esBot = {
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
-                                    API.sendChat("/me Um Brand Ambassador - Embaixador - é a voz dos usuários no plug.dj. Eles promovem eventos, se compromotem com a comunidade e divulgam o plug.dj em todo o mundo. Para mais informações, leia: http://blog.plug.dj/brand-ambassadors/");
+                                    API.sendChat("/me Um Brand Ambassador - Embaixador - é a voz dos usuários no plug.dj. Eles promovem eventos, se comprometem com a comunidade e divulgam o plug.dj em todo o mundo. Para mais informações, leia: http://blog.plug.dj/brand-ambassadors/");
                                 };                              
                         },
                 },
@@ -1230,7 +1230,7 @@ var esBot = {
                                     if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Nenhum usuario valido identificado.');
                                     var name = msg.substr(cmd.length + 2);
                                     var user = esBot.userUtilities.lookupUserName(name);
-                                    if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] O usuario nao e valido.');
+                                    if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] O usuario não e valido.');
                                     //API.sendChat('/me [' + chat.from + ' whips out the banhammer :hammer:]');
                                     API.moderateBanUser(user.id, 1, API.BAN.DAY);
                                 };                              
@@ -1258,7 +1258,7 @@ var esBot = {
                                                 return API.sendChat('/me [@' + chat.from + '] Bouncer+ Agora esta ativado.');
                                             }
                                         }
-                                        else return API.sendChat('/me [@' + chat.from + '] Voce precisa ser manager ou mais para ativar Bouncer+.');
+                                        else return API.sendChat('/me [@' + chat.from + '] Você precisa ser manager ou mais para ativar Bouncer+.');
                                     };
                                 };                              
                         },
@@ -1399,7 +1399,7 @@ var esBot = {
                                         esBot.roomSettings.maximumCycletime = cycleTime;
                                         return API.sendChat('/me [@' + chat.from + '] o cycleguard Foi setado para ' + esBot.roomSettings.maximumCycletime + ' minute(s).');
                                     }
-                                    else return API.sendChat('/me [@' + chat.from + '] o tempo identificado nao e correto para o cycleguard.');
+                                    else return API.sendChat('/me [@' + chat.from + '] o tempo identificado não e correto para o cycleguard.');
                                 
                                 };                              
                         },
@@ -1418,7 +1418,7 @@ var esBot = {
                                     else{ 
                                         name = msg.substring(cmd.length + 2);
                                         var perm = esBot.userUtilities.getPermission(chat.fromID);
-                                        if(perm < 2) return API.sendChat('/me [@' + chat.from + '] Somente boucers ou mais podem usar !dclookup nos outros.');
+                                        if(perm < 2) return API.sendChat('/me [@' + chat.from + '] Somente boucers ou mais podem usar !dclookup nos outros Usuarios.');
                                     }    
                                     var user = esBot.userUtilities.lookupUserName(name);
                                     if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] O usuario e invalido.');
@@ -1448,7 +1448,7 @@ var esBot = {
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
-                                    if(chat.message.length === cmd.length) return API.sendChat('/me O usuario nao foi identificado.');
+                                    if(chat.message.length === cmd.length) return API.sendChat('/me O usuario não foi identificado.');
                                     var name = chat.message.substring(cmd.length + 2);
                                     var user = esBot.userUtilities.lookupUserName(name);
                                     if(typeof user === 'boolean') return API.sendChat('/me O usuario e invalido.');
@@ -1555,7 +1555,7 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] O usuario nao foi identificado.');
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] O usuario não foi identificado.');
                                     var name = msg.substring(cmd.length + 2);
                                     var user = esBot.userUtilities.lookupUserName(name);
                                     if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] O usuario e invalido.');
@@ -1595,7 +1595,7 @@ var esBot = {
                                     var permTokick = esBot.userUtilities.getPermission(user.id);
 
                                     if(permFrom <= permTokick)
-                                        return API.sendChat("/me [@" + chat.from + "] voce nao pode kickar usuarios com o mesmo cargo que voce!")
+                                        return API.sendChat("/me [@" + chat.from + "] você não pode kickar usuarios com o mesmo cargo que você!")
 
                                     if(!isNaN(time)){
                                         API.sendChat('/me [' + chat.from + ' used kick, it\'s super effective!]');
@@ -1811,7 +1811,7 @@ var esBot = {
                                         esBot.roomSettings.lockskipPosition = pos;
                                         return API.sendChat('/me [@' + chat.from + '] Lockskip agora vai mover o dj para a posicao: ' + esBot.roomSettings.lockskipPosition + '.');
                                     }
-                                    else return API.sendChat('/me [@' + chat.from + '] esta posicao nao e valida.');
+                                    else return API.sendChat('/me [@' + chat.from + '] esta posicão não e valida.');
                                 };                              
                         },
                 },
@@ -1829,7 +1829,7 @@ var esBot = {
                                         esBot.roomSettings.maximumLocktime = lockTime;
                                         return API.sendChat('/me [@' + chat.from + '] o lockguard Foi setado para ' + esBot.roomSettings.maximumLocktime + ' minute(s).');
                                     }
-                                    else return API.sendChat('/me [@' + chat.from + '] o tempo setado nao e correto para o lockguard.');
+                                    else return API.sendChat('/me [@' + chat.from + '] o tempo setado não e correto para o lockguard.');
                                 };                              
                         },
                 },
@@ -1883,7 +1883,7 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Usuario nao identificado.');
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] Usuario não identificado.');
                                     var firstSpace = msg.indexOf(' ');
                                     //var secondSpace = msg.substring(firstSpace + 1).indexOf(' ');
                                     var lastSpace = msg.lastIndexOf(' ');
@@ -1898,12 +1898,12 @@ var esBot = {
                                         name = msg.substring(cmd.length + 2,lastSpace);
                                     }
                                     var user = esBot.userUtilities.lookupUserName(name);
-                                    if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Este usuario e unvalido.');
-                                    if(user.id === esBot.loggedInID) return API.sendChat('/me [@' + chat.from + '] Don\'t try to add me to the waitlist, please.');
+                                    if(typeof user === 'boolean') return API.sendChat('/me [@' + chat.from + '] Este usuario é invalido.');
+                                    if(user.id === esBot.loggedInID) return API.sendChat('/me [@' + chat.from + '] não tente me adicionar na lista novamente.');
                                     if (!isNaN(pos)) {
                                         API.sendChat('/me [' + chat.from + ' used move.]');
                                         esBot.userUtilities.moveUser(user.id, pos, false); 
-                                    } else return API.sendChat('/me [@' + chat.from + '] a posicao escolhida e invalida.');
+                                    } else return API.sendChat('/me [@' + chat.from + '] a posição escolhida é invalida.');
                                 };                           
                         },
                 },
@@ -1916,7 +1916,7 @@ var esBot = {
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
                                     var msg = chat.message;
-                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] usuario nao identificado.');
+                                    if(msg.length === cmd.length) return API.sendChat('/me [@' + chat.from + '] usuario não identificado.');
                                     var lastSpace = msg.lastIndexOf(' ');
                                     var time = null;
                                     var name;
@@ -1959,7 +1959,7 @@ var esBot = {
                                             }, time * 60 * 1000, user.id);
                                         } 
                                     }
-                                    else API.sendChat("/me [@" + chat.from + "] Voce nao pode mutar alguem com o mesmo cargo que voce.");
+                                    else API.sendChat("/me [@" + chat.from + "] Voce não pode mutar alguem com o mesmo cargo que você abestado.");
                                 };                              
                         },
                 },
@@ -2036,7 +2036,7 @@ var esBot = {
                                         if (typeof user !== 'boolean') {
                                             API.moderateRemoveDJ(user.id);                                          
                                         } else API.sendChat("/me [@" + chat.from + "] Specified user @" + name + " Não esta na lista de espera.");
-                                      } else API.sendChat("/me [@" + chat.from + "] usuario nao identificado.");
+                                      } else API.sendChat("/me [@" + chat.from + "] usuario não identificado.");
                                 
                                 };                              
                         },
@@ -2257,7 +2257,7 @@ var esBot = {
                                             found = true;
                                         }
                                       }
-                                      if(!found) return API.sendChat('/me [@' + chat.from + '] Este usuario nao esta banido.');
+                                      if(!found) return API.sendChat('/me [@' + chat.from + '] Este usuario não esta banido.');
                                       
                                     API.moderateUnbanUser(user.id);
                                 
@@ -2319,7 +2319,7 @@ var esBot = {
                                         esBot.room.mutedUsers.splice(indexMuted);
                                         API.sendChat('/me [@' + chat.from + '] Unmuted @' + name + '.');
                                     }
-                                    else API.sendChat("/me [@" + chat.from + "] Voce nao pode mutar pessoas com o mesmo cargo que voce.");
+                                    else API.sendChat("/me [@" + chat.from + "] Voce não pode mutar pessoas com o mesmo cargo que você.");
                                     
                                 };                              
                         },
