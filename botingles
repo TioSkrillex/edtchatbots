@@ -87,7 +87,7 @@ var esBot = {
         version: "2.0.1",        
         status: true,
         name: "EDTBot",
-        creator: "EuclideanSpace",
+        creator: "TioSkrillex",
         loggedInID: null,
         scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/botingles",
         cmdLink: "http://goo.gl/LsngcG",
