@@ -89,7 +89,7 @@ var esBot = {
         name: "basicBot",
         creator: "EuclideanSpace",
         loggedInID: null,
-        scriptLink: "https://raw.githubusercontent.com/Yemasthui/basicBot/master/basicBot.js",
+        scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/botingles",
         cmdLink: "http://goo.gl/LsngcG",
         roomSettings: {
             maximumAfk: 120,
