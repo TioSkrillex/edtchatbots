@@ -818,6 +818,7 @@ var esBot = {
                     case '!rules':              esBot.commands.rulesCommand.functionality(chat, '!rules');                          executed = true; break;
                     case '!sessionstats':       esBot.commands.sessionstatsCommand.functionality(chat, '!sessionstats');            executed = true; break;
                     case '!skip':               esBot.commands.skipCommand.functionality(chat, '!skip');                            executed = true; break;
+                    case '!source':             esBot.commands.sourceCommand.functionality(chat, '!source');                        executed = true; break;
                     case '!status':             esBot.commands.statusCommand.functionality(chat, '!status');                        executed = true; break;
                     case '!theme':              esBot.commands.themeCommand.functionality(chat, '!theme');                          executed = true; break;
                     case '!timeguard':          esBot.commands.timeguardCommand.functionality(chat, '!timeguard');                  executed = true; break;
@@ -2128,7 +2129,7 @@ var esBot = {
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
-                                    API.sendChat('/me foi traduzido por ' + esBot.creator + '.');
+                                    API.sendChat('/me foi traduzido por TioSkrillex.');
                                 };                              
                         },
                 },
