@@ -81,7 +81,7 @@ var esBot = {
         translate: "TioSkrillex",
         loggedInID: null,
         scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/ChatbotEDT",
-        cmdLink: "http://git.io/245Ppg",
+        cmdLink: "http://goo.gl/19Va9A",
         roomSettings: {
             maximumAfk: 120,
             afkRemoval: true,                
