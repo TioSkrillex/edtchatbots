@@ -80,7 +80,7 @@ var esBot = {
         name: "EDT ChatBot",
         translate: "TioSkrillex",
         loggedInID: null,
-        scriptLink: "https://rawgit.com/Yemasthui/basicBot/master/basicBot.js",
+        scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/ChatbotEDT",
         cmdLink: "http://git.io/245Ppg",
         roomSettings: {
             maximumAfk: 120,
