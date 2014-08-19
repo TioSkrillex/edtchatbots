@@ -78,7 +78,7 @@ var esBot = {
         version: "2.0.1",        
         status: false,
         name: "EDT ChatBot",
-        edited: "TioSkrillex",
+        creator: "TioSkrillex",
         loggedInID: null,
         scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/ChatbotEDT",
         cmdLink: "http://goo.gl/19Va9A",
@@ -2210,7 +2210,7 @@ var esBot = {
                                 if(this.type === 'exact' && chat.message.length !== cmd.length) return void (0);
                                 if( !esBot.commands.executable(this.rank, chat) ) return void (0);
                                 else{
-                                    API.sendChat('/me This bot was edited by ' + esBot.translate + '.');
+                                    API.sendChat('/me This bot was creator by ' + esBot.creator + '.');
                                 };                              
                         },
                 },
