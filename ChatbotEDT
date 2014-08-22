@@ -81,7 +81,7 @@ var esBot = {
         creator: "TioSkrillex",
         loggedInID: null,
         scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/ChatbotEDT",
-        cmdLink: "http://chatbotcmds.tumblr.com/",
+        cmdLink: "http://goo.gl/K2fwUU",
         roomSettings: {
             maximumAfk: 120,
             afkRemoval: true,                
