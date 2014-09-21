@@ -169,7 +169,7 @@
         status: false,
         name: "EDT-ChatBot",
         loggedInID: null,
-        scriptLink: "https://rawgit.com/Yemasthui/basicBot/master/basicBot.js",
+        scriptLink: "https://raw.githubusercontent.com/TioSkrillex/edtchatbots/master/ChatbotEDT",
         cmdLink: "http://goo.gl/laLzNo",
         chatLink: "https://rawgit.com/Yemasthui/basicBot/master/lang/en.json",
         chat: null,
